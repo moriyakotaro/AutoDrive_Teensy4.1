@@ -73,9 +73,7 @@ void CanControl::CANDataPull(uint32_t id ,uint8_t data[8],uint8_t bus){//ok
 }
 
 int8_t CanControl::CANAllDataRead(){//ok
-	// printD(1);
 	if(!is_can_open)return -1;
-	// printD(2);
 	static uint8_t data_vanishing;
 	static CAN_message_t msg;
 	data_vanishing++;
@@ -85,11 +83,9 @@ int8_t CanControl::CANAllDataRead(){//ok
 			I_have_buffer_data = true;
 			buffer_table1[msg.id] = msg;
 			data_vanishing = 0;
-			// printD(3);
 		}
 	}
 	if(_can2){
-		// printD(Can2.read(msg));
 		if(Can2.read(msg)){
 			I_have_buffer_data = true;
 			buffer_table2[msg.id] = msg;

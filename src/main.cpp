@@ -16,7 +16,6 @@
 #include "1.Operate.h"
 
 #define HWSERIAL Serial5
-// #define PI 3.14159265358979
 #define GYAIRO_LED 24
 #define GYAIRO_CYCLE 1
 #define DISP_CYCLE 10
@@ -37,7 +36,7 @@ double M_Ig = 4.21;
 double M_Dg = 2.4;
 
 double velocity[4] = {0};
-double targets_rpm[4] = {-5000,5000,-5000,5000};//速さ(Hz)
+// double targets_rpm[4] = {-5000,5000,-5000,5000};//速さ(Hz)
 int data[10] = {0};
 int monitoring = 0; 
 const double motor_control_cycle = 2;/*ms*/
@@ -53,26 +52,21 @@ double Pg = 0.342;
 double Ig = 3.21;
 double Dg = 5.4;
 int spd = 0;
-// static int No = 0;
 double gyro_sence;
 double x_val;
 double y_val;
 double x_keep[2];
 double y_keep[2];
-
 double angle[4] = {0};
 double x_rate[2],y_rate[2];
 double sita1;
 double diff = 0;
 int count = 0;
-
 bool rotation_sign;
 int8_t rotation_num=0;
 double rotation_delta=0;
 float rotation_keep[10];
-
 uint8_t led_count = 0;
-
 Adafruit_BNO055 bno = Adafruit_BNO055(-1, 0x28, &Wire);
 
 #define CAN1 1
@@ -84,10 +78,8 @@ CanControl DriveCan2(CAN2);//robomas
 Motor motor(MOTOR_COUNT,SMOOTH_SLOW,SMOOTH_NORMAL,RISING_PWM,SMALL_PWM);
 Drive AutoDrive(motor,CONTROL_CYCLE/1000);
 DJIMotor SpdControl(&DriveCan2,CONTROL_CYCLE/1000,MOTOR_COUNT);
-
 Encoder enc_x(ENCODER_X_A,ENCODER_X_B);
 Encoder enc_y(ENCODER_Y_A,ENCODER_Y_B);
-
 Metro debugTiming = Metro(5);
 Metro ControlTiming = Metro(1.0);
 Metro LEDTiming = Metro(500);
@@ -124,7 +116,6 @@ void setup() {
 
 
 }
-// double idou[5][3] = {{0,0,0},{45,0,PI/2},{45,45,PI},{0,45,PI/2},{0,0,0}};
 double idou[10][3] = {0};
 double damy[10][3] = {0};
 int c=0;
@@ -134,9 +125,7 @@ CAN_message_t sendM;
 int ss=0;
 
 void loop() {
-  // DriveCan1.CANAllDataRead();
   int incomingByte;
-  // DriveCan1.CANAllDataRead();
     if (HWSERIAL.available() > 0) {
             incomingByte = HWSERIAL.read();
             control_data_receive(incomingByte);
@@ -180,20 +169,12 @@ void loop() {
   
   AutoDrive.absoluteMove();
   AutoDrive.update();
-
-
-// for(int i=1;i<=WHEEL_COUNT;i++){
-//   SpdControl.setPIDgain(i,Pg,Ig,Dg);
-// }
-        
 if(debugTiming.check()){                
   printD(1);
 }
 
 for(int i=1;i<=MOTOR_COUNT;i++){
-  // targets_rpm[i-1] = 0;
   SpdControl.setTargetRPM(i,AutoDrive.motor[i-1]);
-  // SpdControl.setTargetRPM(3,1000);
 }
 if(NOMAL_DROVE){
   if(NOMAL_MOVE)gyro_sence = 0;
@@ -325,7 +306,6 @@ void control_data_receive(int recive){
     data[No++] = recive;
     if(No > 8){
       updataState(data);
-      // Serial.print("\n");
     }
   }
 }

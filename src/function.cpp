@@ -10,7 +10,6 @@ double Sita(double x, double y){
     if(y == 100)y = sqrt(20000 - x*x);
     if(y == -100)y = -sqrt(20000 - x*x);
     //20000 = 100*100*RUTO2*RUTO2  
-	// pc.printf("%lf %lf\n",x ,y);
 	if(x == 0 && y == 0){
 		rad = 0;
 	}else{
@@ -79,9 +78,6 @@ int Button_switch_min(int num){
 }
 void Search(double num){
     num = (num > 0) ? 1 : (num < 0) ? -1 : 0;
-        // if(num > 0)num = 1;
-        // if(num < 0)num = -1;
-        // if(num == 0)num = 0;
 }
 
 void Pm(double* s, int* p, int* q){
