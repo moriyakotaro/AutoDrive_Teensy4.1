@@ -62,6 +62,8 @@ double x_rate[2],y_rate[2];
 double sita1;
 double diff = 0;
 int count = 0;
+int b=0; 
+int b_1=0;
 bool rotation_sign;
 int8_t rotation_num=0;
 double rotation_delta=0;
@@ -131,24 +133,15 @@ void loop() {
             control_data_receive(incomingByte);
     }
 ///////////////////////////////////////ここを編集する
-  //example
-  // if(センサーの値)Auto(1);
-  // if(センサーの値)Auto(2);
-  // if(センサーの値)Auto(3); 等々
+//example
+  /*
+  if(センサーの値)b++;
+  Auto(b);
+*/
+
+
 
   Auto(1);
-
-
-
-
-
-
-
-
-
-
-
-
 
 ////////////////////////////////////////////////////////
 
@@ -162,10 +155,11 @@ void loop() {
   AutoDrive.to = Point(idou[c][0],idou[c][1],idou[c][2]);
 
   diff = abs(AutoDrive.to.x - AutoDrive.now.x) + abs(AutoDrive.to.y - AutoDrive.now.y);
-  // if(circle_button == 1){
-    if(diff < 4)c++;
-    if(c == count)c=0;
-  // }
+    
+    if(b_1 != b)c=0;
+    b_1 = b;
+    if(c != count && diff < 4)c++;//目標地点に近づくと次の座標に移動
+
   
   AutoDrive.absoluteMove();
   AutoDrive.update();
